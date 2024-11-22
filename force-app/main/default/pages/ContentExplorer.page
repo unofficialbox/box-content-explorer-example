@@ -1,0 +1,50 @@
+<apex:page lightningStylesheets="true" controller="BoxElementsController">
+    <apex:slds />
+    <apex:includeScript value="{!URLFOR('https://cdn01.boxcdn.net/platform/elements/21.0.0/en-US/explorer.js')}" />
+    <apex:stylesheet value="{!URLFOR('https://cdn01.boxcdn.net/platform/elements/21.0.0/en-US/explorer.css')}" />
+    
+    <apex:includeScript value="{!URLFOR('https://cdn01.boxcdn.net/platform/elements/21.0.0/en-US/preview.js')}" />
+    <apex:stylesheet value="{!URLFOR('https://cdn01.boxcdn.net/platform/elements/21.0.0/en-US/preview.css')}" />
+
+    <body style="height: 515px" onload="init()" />       
+    
+    <script type="text/javascript">
+        function init() {
+            const folderId = '{!$CurrentPage.parameters.folderId}';
+            const downscopedToken = '{!$CurrentPage.parameters.downscopedToken}';
+
+
+            // Instantiate Content Explorer UI Element
+            const explorerContainer = document.querySelector('#explorer-container')
+            const explorer = new Box.ContentExplorer();
+            explorer.show(folderId, downscopedToken, {
+                container: explorerContainer,
+                autoFocus: true,
+                canPreview: true,
+                canDownload: true,
+                canUpload: true,
+                canCreateNewFolder: true,
+                canDelete: true,
+                canRename: true,
+                canShare: true,
+                canSetShareAccess: true,
+                contentPreviewProps: {
+                    showDownload: true,
+                    contentSidebarProps: {
+                        detailsSidebarProps: {
+                            hasAccessStats: true,
+                            hasClassification: true,
+                            hasNotices: true,
+                            hasProperties: true,
+                            hasRetentionPolicy: true,
+                            hasVersions: true,
+                        },
+                        hasActivityFeed: true,
+                        hasMetadata: true,
+                        hasVersions: true
+                    }
+                }
+            });
+        }
+    </script>
+</apex:page>
